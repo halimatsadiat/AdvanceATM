@@ -9,8 +9,13 @@
 #initializing the system
 
 import random
+import validation
+import database
 
-database = {} #dictionary
+#database = {
+# 1234567890: ['sadiat', 'ogidan', 'sadiat@gmail.com', 'sad', 233]}
+
+
 
 def init():
 
@@ -30,7 +35,7 @@ def login():
     print('******* Login *******')
     account_number_from_user = input('What is your account number? \n')
     
-    is_valid_account_number = account_number_validation(account_number_from_user)
+    is_valid_account_number = validation.account_number_validation(account_number_from_user)
     
     if is_valid_account_number:
 
@@ -44,26 +49,7 @@ def login():
         print('Invalid account or password')
         login()
     else:
-        init()
-
-def account_number_validation(account_number):
-   
-    if account_number:
-        if len(str(account_number)) == 10:
-            try:
-                int(account_number)
-                return True
-            except ValueError:
-                print('Invalid Account number, account number should be integer')
-                return False
-            except TypeError:
-                print('Invalid account type')
-                return False
-        else:
-            print('Account Number cannot be more than 10 digits')
-    else:
-        print('Account Number is a required field')
-        return False   
+        init()  
 
 def register():
     print('******Register******')
@@ -71,13 +57,11 @@ def register():
     first_name = input('What is your first name? \n')
     last_name = input('What is your last name? \n')
     password = input('create a password for yourself \n')
-    
-    try:
-        account_number = generate_account_number()
-    except ValueError:
-        print('Account generation failed due to inetrnet connection fail')
-    init()
-    database[account_number] = [ first_name, last_name, email, password ]
+  
+    account_number = generate_account_number()
+
+    database[account_number] = [ first_name, last_name, email, password, 0]
+
     
     print('Your account has been created')
     print('== ==== ====== ===== ===')
@@ -103,18 +87,14 @@ def bankOperation(user):
 
     else:
         print('Invalid option selected')
-    bankOperation(user)
 
 def withdrawal_operation():
-    withdraw = int(input('How much would ypu like to withdraw? \n'))
-
-    if withdraw == int:
-        print('Please take your cash')
-        bankOperation(user)
+    withdraw_option = int(input('How much would you like to withdraw? \n'))
+    print("Take your cash")
+    print(withdraw_option)
 
 def deposit_operation():
-    pass
-
+    print("hpw much")
     
 def generate_account_number():
     return random.randrange(1111111111,9999999999)
