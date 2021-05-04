@@ -12,9 +12,6 @@ import random
 import validation
 import database
 
-#database = {
-# 1234567890: ['sadiat', 'ogidan', 'sadiat@gmail.com', 'sad', 233]}
-
 
 
 def init():
@@ -60,14 +57,19 @@ def register():
   
     account_number = generate_account_number()
 
-    database[account_number] = [ first_name, last_name, email, password, 0]
+    #database[account_number] = [ first_name, last_name, email, password, 0]
+    is_user_created = database.create(account_number,[first_name, last_name, email, password, 0]) 
 
+    if is_user_created:
+        print('Your account has been created')
+        print('== ==== ====== ===== ===')
+        print('Your account number is %d' %account_number)
+        print('== ==== ====== ===== ===')
+        login()
     
-    print('Your account has been created')
-    print('== ==== ====== ===== ===')
-    print('Your account number is %d' %account_number)
-    print('== ==== ====== ===== ===')
-    login()
+    else:
+        print('something went wrong')
+        register()
 
 def bankOperation(user):
     print('welcome %s %s ' % ( user[0], user[1]))
@@ -90,11 +92,13 @@ def bankOperation(user):
 
 def withdrawal_operation():
     withdraw_option = int(input('How much would you like to withdraw? \n'))
-    print("Take your cash")
-    print(withdraw_option)
+    print('Take your #' + withdraw_option + ' cash')
+    print('Thank you for banking with us')
 
 def deposit_operation():
-    print("hpw much")
+    deposit_option = int(input('How much do you want to deposit? \n'))
+    print('You have succesfully deposited #' + deposit_option)
+    print('Thank you for banking with us')
     
 def generate_account_number():
     return random.randrange(1111111111,9999999999)

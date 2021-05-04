@@ -5,13 +5,28 @@
 #find user
 
 #CRUD
+import os
+
+user_db_path = 'data/user_record/'
 
 def create(account_number, userDetails):
-    print('create a new record')
 
-    f = open('data/' + str(account_number) + '.txt', 'x')
-    f.write(str(userDetails))
-    f.close()
+    completion_state = False
+
+    try:
+        f = open('data/user_record/' + str(account_number) + '.txt', 'x')
+    
+    except FileExistsError:
+        print('User already exist')
+        #delete(account_number)
+    else:
+        f.write(str(userDetails))
+        completion_state = True
+    
+    finally:    
+        f.close()
+
+        return completion_state
     #create a file
     #name of the file would be account_number.txt
     # add the user details to the file
@@ -31,12 +46,30 @@ def update(user_account_number):
     # return true
 
 def delete(user_account_number):
-    print('delete user record')
+    
+    is_delete_successful = False
+
+    if (os.path.exists(user_db_path + str(user_account_number) + '.txt')):
+        
+        try:
+
+            os.remove(user_db_path + str(user_account_number) + '.txt')
+            is_delete_successful = True
+
+        except FileNotFoundError:
+            print('User not found')
+
+        finally:
+
+            return is_delete_successful
+
     #find user with account number
+
     #delete the user record [file]
     #return true
 
 def find(user_account_number):
     print('find user')
     #find user record n the data folder
-create(1234567890,['sadiat', 'ogidan', 'sadiat@gmail.com', 'sad', 233])
+
+#print(delete(3786136944))
